@@ -1,7 +1,5 @@
 # Verx Backend
 
-Front-end link: [https://github.com/rafaellevissa/teste-frontend-amicci](https://github.com/rafaellevissa/teste-frontend-amicci)
-
 ## 👨🏻‍🔧 Installation
 
 Make sure the `.env` file is correctly set up, and then build a Docker image using the following command:
@@ -19,24 +17,29 @@ docker compose up -d
 After the container is up, run the migrations with the following command:
 
 ```
-make migrate
+docker compose exec verx-api npm run migration:run
 ```
 
 Then, you can run the seeds with the folowing command:
 
 ```
-make seeder
+docker compose exec verx-api npm run db:seed
 ```
 
 That's all you need 🎉!
 
 ## TESTS
 
-You can run the tests with the folowing command:
+Before run the tests you need to install the dependencies:
 
 ```
-make integration-tests
+npm install
 ```
 
-Deploy feito em: https://dwxzajdn0dlqs.cloudfront.net/
-Documentação da api: http://3.85.33.55:8000/swagger/
+And then you can run the tests with the following command:
+```
+npm run test
+```
+
+Deployed at:  http://34.229.95.135:3333/
+Documentation: http://34.229.95.135:3333/docs/
