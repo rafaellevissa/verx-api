@@ -7,8 +7,19 @@
 |
 */
 
-import ProducersController from '#controllers/producers_controller'
+import swagger from '#config/swagger';
 import router from '@adonisjs/core/services/router'
+import AutoSwagger from "adonis-autoswagger";
+
+const ProducersController = () => import('#controllers/producers_controller')
+
+router.get("/swagger", async () => {
+    return AutoSwagger.default.docs(router.toJSON(), swagger);
+});
+  
+router.get("/docs", async () => {
+    return AutoSwagger.default.ui("/swagger", swagger);
+});
 
 router.get('/producers', [ProducersController, 'index'])
 router.post('/producers', [ProducersController, 'store'])

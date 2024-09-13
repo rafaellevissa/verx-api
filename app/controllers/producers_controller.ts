@@ -16,6 +16,11 @@ export default class ProducersController {
     return response.json(producers)
   }
 
+  /**
+   * @store
+   * @requestBody { "name": "string", "document": "string", "farm": { "name": "string", "arableAreaHectares": 100, "vegetationAreaHectares": 100, "totalAreaHectares": 1000, "address": { "city": "string", "state": "string" }, "cultures": [1, 2] } }
+   * @responseBody 201 - Producer created
+   */
   public async store({ request, response }: HttpContext) {
     const {
       farm: { address, cultures, ...farm },
@@ -32,6 +37,11 @@ export default class ProducersController {
     return response.json(producer)
   }
 
+  /**
+   * @update
+   * @requestBody { "name": "string", "document": "string", "farm": { "name": "string", "arableAreaHectares": 100, "vegetationAreaHectares": 100, "totalAreaHectares": 1000, "address": { "city": "string", "state": "string" }, "cultures": [1, 2] } }
+   * @responseBody 200 - Producer updated
+   */
   public async update({ params, request, response }: HttpContext) {
     const validatedData = await updateProducerValidator.validate(request.all())
     
