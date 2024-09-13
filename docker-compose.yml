@@ -1,0 +1,34 @@
+services:
+  verx-db:
+    container_name: verx-db
+    image: postgres:15
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "${DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  verx-api:
+    container_name: verx-api
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "3333:3333"
+    volumes:
+      - ./:/app
+    depends_on:
+      verx-db:
+        condition: service_healthy
+
+volumes:
+  db-data:
